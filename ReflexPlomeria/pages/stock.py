@@ -1,4 +1,9 @@
 import reflex as rx
+from ..UI.header import header
+from ..UI.base import basePage
+
+from ..state import State
+
 
 def inventory_page() -> rx.Component:
     # Dummy data similar to the reference image
@@ -14,15 +19,13 @@ def inventory_page() -> rx.Component:
         {"id": 1, "name": "Monitor 1", "category": "Monitor", "location": "Room 1", "quantity": 88, "added_at": "19-02-2018"},
     ]
 
-    # Main UI layout
-    return rx.center(
+    my_child = rx.vstack(
         rx.box(
             rx.text("Items", font_size="2xl", font_weight="bold", margin_bottom="1em"),
             rx.container(
                 rx.table.root(
                     rx.table.header(
                         rx.table.row(
-                            
                             rx.table.column_header_cell("ID"),
                             rx.table.column_header_cell("Name"),
                             rx.table.column_header_cell("Category"),
@@ -30,14 +33,15 @@ def inventory_page() -> rx.Component:
                             rx.table.column_header_cell("Quantity"),
                             rx.table.column_header_cell("Added at"),
                             rx.table.column_header_cell("Actions"),
-                            
+                            text_align="center",
                         )
+
                     ),
                     rx.table.body(
                         rx.foreach(
                             stock_data, show_product
                         )
-                    )
+                    ),
                 ),
                 margin_top="1em",
                 width="100%",
@@ -45,9 +49,11 @@ def inventory_page() -> rx.Component:
                 border_radius="8px",
                 padding="1em",
                 box_shadow="md",
+                text_align="center",
+                justify="center",
             ),
             padding="2em",
-            width="80%",
+            width="100%",
             bg="black",
             border_radius="8px",
             box_shadow="lg",
@@ -56,18 +62,27 @@ def inventory_page() -> rx.Component:
         min_height="100vh",
     )
 
+    # Main UI layout
+    return basePage(my_child)
+
+
 def show_product(inventory: list):
     return rx.table.row(
-        rx.table.cell(inventory["id"]),
-        rx.table.cell(inventory["name"]),
-        rx.table.cell(inventory["category"]),
-        rx.table.cell(inventory["location"]),
-        rx.table.cell(inventory["quantity"]),
-        rx.table.cell(inventory["added_at"]),
+        rx.table.cell(inventory["id"], text_align="center", vertical_align="middle"),
+        rx.table.cell(inventory["name"], text_align="center", vertical_align="middle"),
+        rx.table.cell(inventory["category"], text_align="center", vertical_align="middle"),
+        rx.table.cell(inventory["location"], text_align="center", vertical_align="middle"),
+        rx.table.cell(inventory["quantity"], text_align="center", vertical_align="middle"),
+        rx.table.cell(inventory["added_at"], text_align="center", vertical_align="middle"),
         rx.table.cell(
-            rx.button("Edit"),
-            rx.button("Delete"),
+            rx.button("View", margin_x="10px"),
+            rx.button("Edit", onclick = State.redirect_to_edit_product(inventory["id"]) , margin_x="10px"),
+            rx.button("Delete", margin_x="10px"),
+            text_align="center",
+            vertical_align="middle",
         ),
+        justify="center",
+        align="center",
     )
 
 
@@ -75,7 +90,9 @@ def show_product(inventory: list):
 def edit_item(item_id):
     print(f"Edit item with ID {item_id}")
 
+
 def delete_item(item_id):
     print(f"Delete item with ID {item_id}")
+
 
 
