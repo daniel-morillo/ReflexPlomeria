@@ -67,10 +67,7 @@ def inventory_page() -> rx.Component:
 
 
 def show_product(inventory: dict):
-    print(str(inventory["id"]))
-    print(type(inventory["id"]))
-    print(dir(inventory["id"]))
-    print(inventory["id"].to_string())
+
 
     return rx.table.row(
         rx.table.cell(inventory["id"], text_align="center", vertical_align="middle"),

@@ -46,4 +46,5 @@ app = rx.App()
 app.add_page(pages.edit_product_page, route="/edit-product/[product_id]")
 app.add_page(index, route = navigation.routes.HOME_ROUTE)
 app.add_page(pages.inventory_page, route=navigation.routes.INVENTORY_ROUTE)
+app.add_page(pages.add_product_page, route=navigation.routes.ADDPROUDCT_ROUTE)
 
