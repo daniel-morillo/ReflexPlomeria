@@ -3,20 +3,10 @@
 import reflex as rx
 from .UI.header import header
 from .UI.base import basePage
-from . import pages
+from . import pages, navigation
 from .state import State
 from rxconfig import config
 
-
-
-class State(rx.State):
-    """The app state."""
-
-    @staticmethod
-    def redirect_to_edit_product(product_id: int):
-        return rx.redirect(f"/edit-product/{product_id}")
-
-    
 
 
 
@@ -50,8 +40,10 @@ def index() -> rx.Component:
     return basePage(my_child, hideNavbar=False)
 
 
+
+
 app = rx.App()
-app.add_page(pages.edit_product_page, route="/edit-product/[id]")
-app.add_page(index)
-app.add_page(pages.inventory_page, route="/inventory")
+app.add_page(pages.edit_product_page, route="/edit-product/[product_id]")
+app.add_page(index, route = navigation.routes.HOME_ROUTE)
+app.add_page(pages.inventory_page, route=navigation.routes.INVENTORY_ROUTE)
 

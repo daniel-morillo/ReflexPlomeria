@@ -66,7 +66,12 @@ def inventory_page() -> rx.Component:
     return basePage(my_child)
 
 
-def show_product(inventory: list):
+def show_product(inventory: dict):
+    print(str(inventory["id"]))
+    print(type(inventory["id"]))
+    print(dir(inventory["id"]))
+    print(inventory["id"].to_string())
+
     return rx.table.row(
         rx.table.cell(inventory["id"], text_align="center", vertical_align="middle"),
         rx.table.cell(inventory["name"], text_align="center", vertical_align="middle"),
@@ -76,7 +81,11 @@ def show_product(inventory: list):
         rx.table.cell(inventory["added_at"], text_align="center", vertical_align="middle"),
         rx.table.cell(
             rx.button("View", margin_x="10px"),
-            rx.button("Edit", onclick = State.redirect_to_edit_product(inventory["id"]) , margin_x="10px"),
+            rx.button(
+                "Edit",
+                margin_x="10px",
+                on_click=State.redirect_to_edit_product(inventory["id"]),
+            ),
             rx.button("Delete", margin_x="10px"),
             text_align="center",
             vertical_align="middle",

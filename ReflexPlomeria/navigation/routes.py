@@ -1,0 +1,5 @@
+HOME_ROUTE = '/'
+LOGIN_ROUTE = '/login'
+INVENTORY_ROUTE = '/inventory'
+ADDPROUDCT_ROUTE = '/add-product'
+EDITPRODUCT_ROUTE = '/edit-product/[id]'
