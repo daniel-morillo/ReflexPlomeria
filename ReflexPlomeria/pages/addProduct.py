@@ -1,4 +1,5 @@
 import reflex as rx
+import asyncio
 
 from ..UI.base import basePage
 from ..navigation import routes
@@ -6,17 +7,24 @@ from ..navigation import routes
 
 class FormState(rx.State):
     form_data: dict = {}
+    is_submited: bool = False
 
     @rx.event
-    def handle_submit(self, form_data: dict):
+    async def handle_submit(self, form_data: dict):
         """Handle the form submit."""
         self.form_data = form_data
+        self.is_submited = True
+        yield
+        await asyncio.sleep(3)
+        self.is_submited = False
+        yield
 
 
 def add_product_page():
 
     my_form = rx.form(
             rx.vstack(
+                rx.cond(FormState.is_submited, FormState.form_data.to_string(), ""),
                 rx.input(
                     placeholder="Nombre del Producto",
                     name="product_name",
